@@ -12,6 +12,7 @@ const arcjetMiddleware = async (req, res, next) => {
       if (decision.reason.isBot()) {
         return res.status(403).send("Forbidden - access denied.");
       }
+      return res.status(403).send("Forbidden - access denied.");
     }
 
     next();
