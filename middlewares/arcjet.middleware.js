@@ -5,12 +5,12 @@ const arcjetMiddleware = async (req, res, next) => {
     const decision = await aj.protect(req, { requested: 1 });
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit()) {
-        res
+        return res
           .status(429)
           .send("Too Many Requests - rate limit has been exceeded.");
       }
       if (decision.reason.isBot()) {
-        res.status(403).send("Forbidden - access denied.");
+        return res.status(403).send("Forbidden - access denied.");
       }
     }
 

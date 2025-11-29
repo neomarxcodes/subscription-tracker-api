@@ -1,6 +1,10 @@
 import arcjet, { shield, detectBot, tokenBucket } from "@arcjet/node";
 import { ARCJET_KEY } from "./env.js";
 
+if (!ARCJET_KEY) {
+  throw new Error("ARCJET_KEY is not defined in environment variables");
+}
+
 const aj = arcjet({
   key: ARCJET_KEY,
   rules: [
