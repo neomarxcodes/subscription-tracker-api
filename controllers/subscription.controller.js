@@ -63,9 +63,7 @@ export const deleteUserSubscription = async (req, res, next) => {
     });
 
     if (!subscription) {
-      const error = new Error(
-        "Subscription not found or you don't have permission to delete it"
-      );
+      const error = new Error("Subscription doesn't exist");
       error.statusCode = 404;
       throw error;
     }
@@ -73,6 +71,31 @@ export const deleteUserSubscription = async (req, res, next) => {
     res
       .status(200)
       .json({ success: true, message: "Subscription successfully deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSubscriptionDetails = async (req, res, next) => {
+  try {
+    const subscriptionDetails = await Subscription.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!subscriptionDetails) {
+      const error = new Error(
+        "Cannot find subscription details because it does not exist"
+      );
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully fetched subscription details",
+      data: subscriptionDetails,
+    });
   } catch (error) {
     next(error);
   }
