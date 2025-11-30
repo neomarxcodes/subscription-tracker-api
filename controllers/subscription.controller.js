@@ -2,8 +2,23 @@ import Subscription from "../models/subscription.model.js";
 
 export const createSubscription = async (req, res, next) => {
   try {
+    const {
+      name,
+      price,
+      currency,
+      frequency,
+      category,
+      paymentMethod,
+      startDate,
+    } = req.body;
     const subscription = await Subscription.create({
-      ...req.body,
+      name,
+      price,
+      currency,
+      frequency,
+      category,
+      paymentMethod,
+      startDate,
       user: req.user._id,
     });
 
@@ -20,7 +35,7 @@ export const getUserSubscriptions = async (req, res, next) => {
       const error = new Error(
         "You are not the owner of this account; cannot get user subscriptions"
       );
-      error.status = 403;
+      error.statusCode = 403;
       throw error;
     }
 
@@ -51,7 +66,7 @@ export const deleteUserSubscription = async (req, res, next) => {
       const error = new Error(
         "Subscription not found or you don't have permission to delete it"
       );
-      error.status = 404;
+      error.statusCode = 404;
       throw error;
     }
 

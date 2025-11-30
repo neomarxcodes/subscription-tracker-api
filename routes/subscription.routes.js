@@ -8,6 +8,14 @@ import {
 
 const subscriptionRouter = Router();
 
+// ✅ GET /subscriptions/user/:id -> get subscriptions by user ID
+subscriptionRouter.get("/user/:id", authorize, getUserSubscriptions);
+
+// GET /subscriptions/upcoming-renewals -> GET upcoming renewals by user ID
+subscriptionRouter.get("/upcoming-renewals", (req, res) =>
+  res.send({ title: "Get upcoming renewals" })
+);
+
 // GET /subscriptions/:id -> get subscription details by ID
 subscriptionRouter.get("/:id", (req, res) =>
   res.send({ title: "GET subscription details by ID" })
@@ -24,17 +32,9 @@ subscriptionRouter.put("/:id", (req, res) =>
 // ✅ DELETE /subscriptions/:id -> delete subscription by ID
 subscriptionRouter.delete("/:id", authorize, deleteUserSubscription);
 
-// ✅ GET /subscriptions/user/:id -> get subscriptions by user ID
-subscriptionRouter.get("/user/:id", authorize, getUserSubscriptions);
-
 // PUT /subscriptions/:id/cancel -> cancel subscription by ID
 subscriptionRouter.put("/:id/cancel", (req, res) =>
   res.send({ title: "CANCEL subscription by ID" })
-);
-
-// GET /subscriptions/upcoming-renewals -> GET upcoming renewals by user ID
-subscriptionRouter.get("/upcoming-renewals", (req, res) =>
-  res.send({ title: "Get upcoming renewals" })
 );
 
 export default subscriptionRouter;
