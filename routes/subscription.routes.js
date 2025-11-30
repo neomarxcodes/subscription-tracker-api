@@ -3,6 +3,7 @@ import authorize from "../middlewares/auth.middleware.js";
 import {
   createSubscription,
   deleteUserSubscription,
+  getSubscriptionDetails,
   getUserSubscriptions,
 } from "../controllers/subscription.controller.js";
 
@@ -16,10 +17,8 @@ subscriptionRouter.get("/upcoming-renewals", (req, res) =>
   res.send({ title: "Get upcoming renewals" })
 );
 
-// GET /subscriptions/:id -> get subscription details by ID
-subscriptionRouter.get("/:id", (req, res) =>
-  res.send({ title: "GET subscription details by ID" })
-);
+// ✅ GET /subscriptions/:id -> get subscription details by ID
+subscriptionRouter.get("/:id", authorize, getSubscriptionDetails);
 
 // ✅ POST /subscriptions -> create a new subscription
 subscriptionRouter.post("/", authorize, createSubscription);
